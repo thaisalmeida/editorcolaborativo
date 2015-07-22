@@ -56,76 +56,11 @@ public class GerenciaMensagemCliente implements Runnable {
     Scanner s;
     try {
         s = new Scanner(this.cliente.getClienteSocket().getInputStream());
-        int idMensagem ;        
-        
+              
         while (s.hasNext()) {
-           mensagem = "";
-           String mens = s.next();
-           idMensagem = Integer.parseInt(mens.substring(0,2));
-           System.out.println(idMensagem);
- 
-           switch(idMensagem){
-               case FAZER_LOGIN:
-                   s.useDelimiter("\0|\n");
-                   String login = s.next();
-                   String senha = s.next();
-                   s.skip("\0");
-                   String palavras[] = segmentaFAZER_LOGIN(login,senha );                
-                   //validaLogin(palavras[0],palavras[1]);
-                   mensagem = idMensagem+"#"+palavras[0]+"#"+palavras[1]+"\0 - "+this.cliente.getClienteSocket().getInetAddress().getHostAddress();
-                   //atualizaTela(idMensagem);
-                   //s.useDelimiter("\n");
-                   break;
-               case SUBMETER_LOTE:
-                    String lanceMin = s.next() ;
-                    String quantidade = s.next() ;
-                    String linha="";
-                    int i = 0;
-                    while(i < Integer.parseInt(quantidade)){
-                            linha = s.next();   
-                            items = items + linha+"\n";
-                            itemsFormatados = itemsFormatados +linha+"#";                         
-                            i++;
-                    }
-                    //int pegaIntervalo = itemsFormatados.indexOf("\0");
-                    lanceMinimo = Float.parseFloat(lanceMin);
-                    lanceMax = Float.parseFloat(lanceMin);
-                    mensagem = idMensagem+"#"+lanceMin+"#"+quantidade+"#"+itemsFormatados+"\0 - "+this.cliente.getClienteSocket().getInetAddress().getHostAddress();
-                    //enviaRespostaSubmisaoLote(lanceMin, quantidade, items,idMensagem);
-                   break;
-               case ENVIAR_LANCE:
-                   String lance = s.next();
-                   mensagem = idMensagem+"#"+lance+"\0 - "+this.cliente.getClienteSocket().getInetAddress().getHostAddress();
-                   //enviaRespostaLance(lance,idMensagem);
-                   break;             
-               case ENVIAR_DADOS:
-                   String nroCartao = s.next();
-                   String codSeguranca = s.next();
-                   String mesVenc = s.next();
-                   String AnoVenc = s.next();
-                   String nomeTitular = s.next();
-                   mensagem = idMensagem +"#"+nroCartao+"#"+codSeguranca+"#"+nroCartao+"#"+mesVenc+"#"+AnoVenc+"#"+nomeTitular
-                           +"\0-"+this.cliente.getClienteSocket().getInetAddress().getHostAddress();
-                   //atualizaTela(idMensagem);
-                   break; 
-               case FINALIZA_CONEXAO:
-                    mensagem =idMensagem+"#"+cliente.getClienteSocket().getInetAddress().getHostAddress()+"(desconexão)!";
-                    //atualizaTela(idMensagem);
-                    this.cliente.getClienteSocket().close();
-                    //servidor.getListaClientes().remove(this.cliente);
-                   break;
-               case SOLICITA_USUARIOS:
-                   mensagem = idMensagem+"#"+cliente.getClienteSocket().getInetAddress().getHostAddress()+"(Solicitou lista de usuários)!";
-                   //atualizaTela(idMensagem);
-                   //enviaRespostaSolicitacaoUsuarios();
-                   break;
-               case ECHO:
-                   enviaRespostaestouVivo();
-                   break;
-               default:
-                   break;
-           }
-        }
+             
+            System.out.println(s.next());
+       }
         
      } catch (IOException ex) {
         Logger.getLogger(GerenciaMensagemCliente.class.getName()).log(Level.SEVERE, null, ex);
