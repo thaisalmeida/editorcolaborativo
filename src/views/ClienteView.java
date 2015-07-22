@@ -5,6 +5,7 @@
  */
 package views;
 
+import Model.Cliente;
 import java.awt.Color;
 import javax.swing.text.Utilities;
 
@@ -14,13 +15,14 @@ import javax.swing.text.Utilities;
  */
 public class ClienteView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ClienteView
-     */
+   Cliente cliente; 
     public ClienteView() {
         initComponents();
     }
-
+    public ClienteView(Cliente cliente) {
+        this.cliente = cliente;
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,8 +54,8 @@ public class ClienteView extends javax.swing.JFrame {
         textAreaEditorCliente.setRows(5);
         textAreaEditorCliente.setText("Clique para editar.....");
         textAreaEditorCliente.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textAreaEditorClienteKeyPressed(evt);
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textAreaEditorClienteKeyTyped(evt);
             }
         });
         jScrollPane1.setViewportView(textAreaEditorCliente);
@@ -104,54 +106,24 @@ public class ClienteView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textAreaEditorClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textAreaEditorClienteKeyPressed
-        int caretPos = textAreaEditorCliente.getCaretPosition();
-        int rowNum = (caretPos == 0) ? 1 : 0;
-        try {
-
-           for (int offset = caretPos; offset > 0;) {
-                System.out.println("Offset" + offset+ textAreaEditorCliente.getText(offset,0));   
-                offset = Utilities.getRowStart(textAreaEditorCliente, offset) - 1;
-                rowNum++;
-            }
-            System.out.println("Row: " + rowNum);   
-        } catch (Exception e) {
-            
-        }
-
-    }//GEN-LAST:event_textAreaEditorClienteKeyPressed
+    private void textAreaEditorClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textAreaEditorClienteKeyTyped
+        this.cliente.enviaMensagemCliente(this.textAreaEditorCliente.getText(), this.textAreaEditorCliente.getCaretPosition(), this.cliente.getClienteSocket());
+    }//GEN-LAST:event_textAreaEditorClienteKeyTyped
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
+        Cliente cliente = new Cliente();
+        final ClienteView clienteView = new ClienteView(cliente);
+        
+        clienteView.cliente.estabelecerConexao();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClienteView().setVisible(true);
+                
+                clienteView.setVisible(true);
+                
+                
             }
         });
     }

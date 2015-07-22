@@ -1,5 +1,6 @@
 package Model;
 
+import com.sun.corba.se.impl.orbutil.ObjectWriter;
 import controller.GerenciaMensagemServidor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +18,7 @@ public class Cliente {
     private String login;
     private String senha;
     private String enderecoIP = "127.0.0.1";//MUDAR
-    private String enderecoIPServidor = "127.0.0.1";
+    private String enderecoIPServidor = "10.4.6.39";
     private int status; // 0 :vendedor | 1 : comprador
     private String nroCartao;
     private String codigoSeguranca;
@@ -39,10 +40,10 @@ public class Cliente {
     }
 
 	
-    public void enviaMensagemCliente(String mensagem,Socket destinatario){      
+    public void enviaMensagemCliente(String mensagem, int posicao, Socket destinatario){      
         try {
-            PrintWriter out = new PrintWriter(destinatario.getOutputStream(), true);           
-            out.print("63\n"+mensagem+"\0");
+            PrintWriter out = new PrintWriter(destinatario.getOutputStream(), true);
+            out.print("{" + mensagem + "," + posicao + "}");
             out.flush();
         } catch (IOException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
