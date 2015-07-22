@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sistemaeditorcolaborativo;
+package controller;
+
+import Model.Cliente;
 
 /**
  *
  * @author Thais
  */
-public class Sistemaeditorcolaborativo {
-
-    /**
-     * @param args the command line arguments
-     */
+public class ClienteMain {
     public static void main(String[] args) {
-        // TODO code application logic here
+        Cliente cliente = new Cliente();
+        cliente.estabelecerConexao();
     }
-    
 }
