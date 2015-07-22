@@ -27,10 +27,7 @@ public class Cliente {
     private Socket clienteParaClienteSocket = null;
     private ServerSocket clienteServidorSocket = null;
     private ArrayList<Cliente> listaClientesLogados = null;
-    private float lance = 0.0f;
     
-    final static int LEILOEIRO = 0;
-    final static int COMPRADOR = 1;
     
     /*telas clientSide*/
     //Login telaLogin = new Login();
@@ -41,16 +38,6 @@ public class Cliente {
             this.listaClientesLogados = new ArrayList<Cliente>();
     }
 
-    public void conectarCliente(String ip, String mensagem){
-    try {
-        this.clienteParaClienteSocket  = new Socket(ip,9000);
-        System.out.println("conexão realizada com sucesso");
-        enviaMensagemCliente(mensagem, clienteParaClienteSocket);
-
-    } catch (Exception e) {
-        System.out.println(e.getMessage());
-    }  
-    }
 	
     public void enviaMensagemCliente(String mensagem,Socket destinatario){      
         try {
@@ -80,7 +67,7 @@ public class Cliente {
     }
    
    
-   public Socket getClienteSocket() {
+     public Socket getClienteSocket() {
 		return clienteSocket;
 	}
 
@@ -88,30 +75,7 @@ public class Cliente {
 	public void setClienteSocket(Socket clienteSocket) {
 		this.clienteSocket = clienteSocket;
 	}
-
-
-	public void solicitarLogin(String login, String senha){
-           String mensagem = "11\n"+login+"\n"+senha+"\0";
-           
-            try {
-            	//InputStream stream = new ByteArrayInputStream(mensagem.getBytes(StandardCharsets.UTF_8));
-                PrintWriter out = new PrintWriter(clienteSocket.getOutputStream(), true);
-                out.print(mensagem);
-                out.flush();
-
-            } catch (IOException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-           
-        }     
-	/************************** Frames ********************************/	
-	//public void actionPerformed(ActionEvent e) {
-	//	    this.login = telaLogin.txtLogin.getText();
-	//	    this.senha = telaLogin.txtSenha.getText();
-        //  solicitarLogin(telaLogin.txtLogin.getText(), telaLogin.txtSenha.getText());
-            
-	//}
-    
+   
 	/*getters and setters*/
 	public String getNome() {
 		return nome;
@@ -183,14 +147,6 @@ public class Cliente {
 	public void setAnoVencimento(String anoVencimento) {
 		this.anoVencimento = anoVencimento;
 	}
-	public float getLance() {
-		return lance;
-	}
-
-	public void setLance(float lance) {
-		this.lance = lance;
-	}
-
 	public Socket getClienteParaClienteSocket() {
 		return clienteParaClienteSocket;
 	}

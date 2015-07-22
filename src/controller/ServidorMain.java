@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class ServidorMain {
 
     public static void main(String[] args) {
-        Servidor servidor = new Servidor("", 8000);
+        Servidor servidor = new Servidor("10.4.6.39", 8000);
 
         try {
             servidor.estabeleceConexao();

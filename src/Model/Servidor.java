@@ -29,15 +29,18 @@ public class Servidor {
     
     public void estabeleceConexao () throws IOException {
     this.servidorSocket = new ServerSocket(this.nroPorta);
+        System.out.println("antes"); 
 
     while (true) {
-      // aceita um cliente
+        System.out.println("Entrei"); 
+
+        // aceita um cliente
       clienteSocket = servidorSocket.accept();
 
       // adiciona cliente à lista
       Cliente cliente = new Cliente();
       cliente.setClienteSocket(clienteSocket);          
-
+        System.out.println("EBaaa"); 
       // cria tratador de cliente numa nova thread
       GerenciaMensagemCliente gerenciaMensagemCliente = new GerenciaMensagemCliente(this,cliente);
       new Thread(gerenciaMensagemCliente).start();
